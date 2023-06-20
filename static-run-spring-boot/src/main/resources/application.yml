@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: static-run-springboot
+  sql:
+    init:
+      data-locations:
+        - classpath:sql/*.sql
+      mode: NEVER
+      continue-on-error: true
+  profiles:
+    active:
+      - default
+      - dev
