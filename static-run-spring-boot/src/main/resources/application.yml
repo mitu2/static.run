@@ -1,13 +1,28 @@
 spring:
+  profiles:
+    active:
+      - default
+      - dev
   application:
     name: static-run-springboot
   sql:
     init:
       data-locations:
         - classpath:sql/*.sql
-      mode: NEVER
+      mode: ALWAYS
       continue-on-error: true
-  profiles:
-    active:
-      - default
-      - dev
+  web:
+    locale: zh_CN
+  jackson:
+    locale: zh_CN
+  pid:
+    fail-on-write-error: true
+    file: ${system.work-dir}/application.pid
+server:
+  compression:
+    enabled: true
+logging:
+  file:
+    path: ${system.work-dir}/logs
+system:
+  work-dir: ${user.home}/.SpringStaticRunApplication

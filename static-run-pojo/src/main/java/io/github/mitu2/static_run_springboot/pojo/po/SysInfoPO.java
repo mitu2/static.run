@@ -8,12 +8,12 @@ import lombok.With;
 /**
  * @author chenmoand
  */
-@Table(name = "system_config_info")
+@Table(name = "sys_info")
 @Entity
 @With
 @AllArgsConstructor
 @NoArgsConstructor
-public class SystemConfigInfoPO {
+public class SysInfoPO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

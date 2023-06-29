@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+server:
+  port: 8091
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:/mapper/*.xml
+
+logging:
+  level:
+    web: info
+    io:
+      github:
+        mitu2: info
