@@ -4,7 +4,9 @@ import { useMessage } from "naive-ui";
 
 import useModuleStore from "@/store/useModuleStore";
 import { Add as AddIcon } from "@vicons/ionicons5";
-import RegexpItem from "@/components/RegexpItem.vue";
+import RegexpItem from "@/components/regexp/RegexpItem.vue";
+import RegexpBaseOption from "@/components/regexp/RegexpBaseOption.vue";
+import RegexpElementOption from "@/components/regexp/RegexpElementOption.vue";
 
 const { state, commit } = useModuleStore('regexp')
 const message = useMessage()
@@ -25,6 +27,7 @@ let recordName = ref('')
 function addRegexpRecordByInput() {
   if (recordName.value) {
     commit('addRegexpRecord', recordName.value)
+    recordName.value = ''
     return
   }
   message.error("请输入一个名称")
@@ -38,10 +41,8 @@ function addRegexpChild(child) {
   })
 }
 
-let text = ref('')
-
 function testRegexp(config) {
-  if (text.value.length === 0) {
+  if (config.text) {
     return [ [ { text: '无匹配数据', isMatch: false } ] ]
   }
   return [
@@ -63,11 +64,11 @@ function testRegexp(config) {
           {{ it.name }}
         </template>
         <div class="regexp-item">
-          <div class="regexp-item-line">
+          <n-card title="操作框" size="small">
             <n-text class="regexp-side" code>
               {{
                 '/' +
-                getChar((!it.option.isReverseSelection && it.option.match.start) && '^') +
+                getChar((!it.option.isReverseSelection && it.option.isMatchStart) && '^') +
                 getChar(it.option.isReverseSelection && '^((?!')
               }}
             </n-text>
@@ -86,7 +87,7 @@ function testRegexp(config) {
             <n-text class="regexp-side" code>
               {{
                 getChar(it.option.isReverseSelection && ').)*') +
-                getChar((!it.option.isReverseSelection && it.option.match.end) && '$') + '/' +
+                getChar((!it.option.isReverseSelection && it.option.isMatchEnd) && '$') + '/' +
                 getChar(it.option.isUnixLines && 'g') +
                 getChar(it.option.isCaseInsensitive && 'i') +
                 getChar(it.option.isMultiline && 'm') +
@@ -95,15 +96,14 @@ function testRegexp(config) {
                 getChar(it.option.isCanonEq && 'y')
               }}
             </n-text>
-          </div>
-          <n-space vertical>
+          </n-card>
+          <n-card title="文本区" size="small">
             <n-input
-                v-model:value="text"
+                v-model:value="it.text"
                 type="textarea"
-                placeholder="测试文本输入地址"
             />
-          </n-space>
-          <n-space vertical>
+          </n-card>
+          <n-card title="匹配结果" size="small">
             <n-ol align-text>
               <n-li v-for="(regIt, id) in testRegexp(it)" :key="id">
                 <n-text v-for="(chiRegIt, chiId) in regIt"
@@ -114,75 +114,14 @@ function testRegexp(config) {
                 </n-text>
               </n-li>
             </n-ol>
-          </n-space>
+          </n-card>
         </div>
         <n-tabs type="segment">
           <n-tab-pane name="baseConfig" tab="基本配置">
-            <n-row>
-              <n-col :span="8">
-                <n-checkbox v-model:checked="it.option.isReverseSelection"
-                            :on-change="value => { if(value) { it.option.match.start = it.option.match.end = false } return value; }">
-                  反转匹配
-                </n-checkbox>
-              </n-col>
-              <n-col :span="8">
-                <n-checkbox v-model:checked="it.option.match.start" :disabled="it.option.isReverseSelection">
-                  匹配开头
-                  <n-text code>^</n-text>
-                </n-checkbox>
-              </n-col>
-              <n-col :span="8">
-                <n-checkbox v-model:checked="it.option.match.end" :disabled="it.option.isReverseSelection">
-                  匹配结尾
-                  <n-text code>$</n-text>
-                </n-checkbox>
-              </n-col>
-            </n-row>
-            <n-row>
-              <n-col :span="12">
-                <n-checkbox v-model:checked="it.option.isUnixLines">
-                  全局搜索
-                </n-checkbox>
-              </n-col>
-              <n-col :span="12">
-                <n-checkbox v-model:checked="it.option.isCaseInsensitive">
-                  不分大小写
-                </n-checkbox>
-              </n-col>
-            </n-row>
-            <n-row>
-              <n-col :span="12">
-                <n-checkbox v-model:checked="it.option.isMultiline">
-                  多行匹配
-                </n-checkbox>
-              </n-col>
-              <n-col :span="12">
-                <n-checkbox v-model:checked="it.option.isDotall">
-                  允许
-                  <n-text code>.</n-text>
-                  匹配换行符
-                </n-checkbox>
-              </n-col>
-            </n-row>
-            <n-row>
-              <n-col :span="12">
-                <n-checkbox v-model:checked="it.option.isUnicodeCase">
-                  使用
-                  <n-text code>unicode</n-text>
-                  码的模式进行匹配
-                </n-checkbox>
-              </n-col>
-              <n-col :span="12">
-                <n-checkbox v-model:checked="it.option.isCanonEq">
-                  执行
-                  <n-text code>“粘性 (sticky)”</n-text>
-                  搜索，匹配从目标字符串的当前位置开始
-                </n-checkbox>
-              </n-col>
-            </n-row>
+            <regexp-base-option :index="ind"/>
           </n-tab-pane>
-          <n-tab-pane name="currConfig" tab="当前配置">
-            1
+          <n-tab-pane name="elementConfig" tab="元素配置">
+            <regexp-element-option :index="ind"/>
           </n-tab-pane>
         </n-tabs>
       </n-thing>

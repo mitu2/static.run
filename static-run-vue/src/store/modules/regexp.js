@@ -2,25 +2,19 @@ const state = () => ({
     items: []
 })
 
-const getters = {
-
-}
+const getters = {}
 
 const mutations = {
 
-    addRegexpRecord(state, name) {
-        if(typeof name !== 'string') {
+    addRegexpRecord({ items }, name) {
+        if (typeof name !== 'string') {
             return
         }
-        state.items.push({
+        items.push({
             name,
             option: {
-                match: {
-                    // 匹配 ^
-                    start: false,
-                    // 匹配 $
-                    end: false
-                },
+                isMatchStart: false,
+                isMatchEnd: false,
                 // 是否反转查询
                 isReverseSelection: false,
                 isUnixLines: false,
@@ -31,14 +25,13 @@ const mutations = {
                 isUnicodeCase: false,
                 isCanonEq: false,
             },
+            text: '',
             child: []
         })
     }
 }
 
-const actions = {
-
-}
+const actions = {}
 
 export default {
     namespaced: true,
