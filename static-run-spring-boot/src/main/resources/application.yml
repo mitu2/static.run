@@ -18,6 +18,10 @@ spring:
   pid:
     fail-on-write-error: true
     file: ${system.work-dir}/application.pid
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 server:
   compression:
     enabled: true

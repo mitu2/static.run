@@ -1,8 +1,8 @@
 package io.github.mitu2.static_run_springboot.configuration;
 
 import io.github.mitu2.static_run_springboot.constant.SystemErrorStatusEnum;
-import io.github.mitu2.static_run_springboot.exception.RequestFailureException;
-import io.github.mitu2.static_run_springboot.pojo.dto.ResultErrorDTO;
+import io.github.mitu2.static_run_springboot.exception.ServerErrorRuntimeException;
+import io.github.mitu2.static_run_springboot.pojo.dto.ErrorInfoDTO;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,13 +51,13 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         @ExceptionHandler(Throwable.class)
         @ResponseBody
         @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-        public ResultErrorDTO doThrowableHandler(HttpServletResponse response, Throwable e) {
-            if (e instanceof RequestFailureException) {
-                RequestFailureException exception = (RequestFailureException) e;
+        public ErrorInfoDTO doThrowableHandler(HttpServletResponse response, Throwable e) {
+            if (e instanceof ServerErrorRuntimeException) {
+                ServerErrorRuntimeException exception = (ServerErrorRuntimeException) e;
                 response.setStatus(exception.getHttpStatus().value());
                 return exception.getResultError();
             }
-            return ResultErrorDTO.fromErrorStatus(SystemErrorStatusEnum.UNKNOWN);
+            return ErrorInfoDTO.fromErrorStatus(SystemErrorStatusEnum.UNKNOWN);
         }
 
     }

@@ -1,28 +1,38 @@
 package io.github.mitu2.static_run_springboot.pojo.po;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.With;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @author chenmoand
  */
 @Table(name = "sys_info")
 @Entity
-@With
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysInfoPO {
+@EqualsAndHashCode(callSuper = true)
+public class SysInfoPO extends AbstractEntity<Integer> implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Serial
+    private static final long serialVersionUID = -8920945003406453892L;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String name;
 
     @Column
     private String value;
+
+    @Column
+    private String targetClass;
+
 
 }

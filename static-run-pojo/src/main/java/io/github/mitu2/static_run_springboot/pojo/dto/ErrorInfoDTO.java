@@ -1,7 +1,6 @@
 package io.github.mitu2.static_run_springboot.pojo.dto;
 
 import io.github.mitu2.static_run_springboot.constant.ErrorStatusInterface;
-import io.github.mitu2.static_run_springboot.constant.SystemErrorStatusEnum;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResultErrorDTO {
+public class ErrorInfoDTO {
 
     private String errCode;
     private String errMessage;
@@ -20,7 +19,7 @@ public class ResultErrorDTO {
     private LocalDateTime date = LocalDateTime.now();
     private Object data;
 
-    public static ResultErrorDTO fromErrorStatus(ErrorStatusInterface systemErrorStatusEnum) {
+    public static ErrorInfoDTO fromErrorStatus(ErrorStatusInterface systemErrorStatusEnum) {
         return builder()
                 .errCode(systemErrorStatusEnum.getCode())
                 .errMessage(systemErrorStatusEnum.getDesc())

@@ -25,6 +25,19 @@ const menuOptions = [
     icon: renderIcon(HomeIcon)
   },
   {
+    label: () => h(
+        RouterLink,
+        {
+          to: {
+            name: "LeaveMessage",
+            params: {}
+          }
+        },
+        { default: () => "留言板" }
+    ),
+    key: "go-leave-message",
+  },
+  {
     label: "小工具",
     key: "tool",
     icon: renderIcon(ToolIcon),
@@ -97,6 +110,7 @@ function handleUpdateValue(key, item) {
 #general-header {
   margin-bottom: 5px;
 }
+
 #general-header-menu {
   padding-top: 10px;
   padding-bottom: 10px;

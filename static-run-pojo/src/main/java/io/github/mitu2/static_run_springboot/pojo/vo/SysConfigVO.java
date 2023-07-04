@@ -2,6 +2,8 @@ package io.github.mitu2.static_run_springboot.pojo.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -9,10 +11,14 @@ import java.time.LocalDateTime;
  * @date 2023/6/29 21:12
  */
 @Data
-public class SysConfigVO {
+public class SysConfigVO implements Serializable {
+
+
+    @Serial
+    private static final long serialVersionUID = -5226152751330452972L;
 
     /**
-     * 第一次部署时间
+     * 安装时间
      */
     private LocalDateTime installDate;
     /**
@@ -27,6 +33,7 @@ public class SysConfigVO {
      * 启动次数
      */
     private Long startUps;
+
 
 
 }
