@@ -1,5 +1,11 @@
 <script setup>
+import { getSysConfig } from "@/request/system.request";
 
+
+
+getSysConfig().then(res => {
+  console.log(res.data)
+})
 </script>
 
 <template>

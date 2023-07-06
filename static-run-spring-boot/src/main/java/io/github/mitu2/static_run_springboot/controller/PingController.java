@@ -17,9 +17,4 @@ public class PingController {
         return "pong";
     }
 
-    @GetMapping("test-error")
-    public void error(){
-        throw new ServerErrorRuntimeException(ErrorInfoDTO.fromErrorStatus(SystemErrorStatusEnum.UNKNOWN));
-    }
-
 }

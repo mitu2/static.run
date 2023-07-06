@@ -1,6 +1,7 @@
 package io.github.mitu2.static_run_springboot.configuration;
 
 import io.github.mitu2.static_run_springboot.constant.SystemErrorStatusEnum;
+import io.github.mitu2.static_run_springboot.controller.SysInfoController;
 import io.github.mitu2.static_run_springboot.exception.ServerErrorRuntimeException;
 import io.github.mitu2.static_run_springboot.pojo.dto.ErrorInfoDTO;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,41 +22,28 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-    @Bean
-    @Profile("dev")
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        // 修改为添加而不是设置，* 最好改为实际的需要，我这是非生产配置，所以粗暴了一点
-        configuration.addAllowedOriginPattern("*");
-        // 修改为添加而不是设置
-        configuration.addAllowedMethod("*");
-        // 这里很重要，起码需要允许 Access-Control-Allow-Origin
-        configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", configuration);
-        return urlBasedCorsConfigurationSource;
-    }
-
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
-                .allowedOriginPatterns("*.static.run");
+                .allowedOriginPatterns("*.static.run:*")
+                .allowedMethods("*")
+                .allowCredentials(true)
+                .allowedHeaders("*");
     }
 
-    @RestControllerAdvice(basePackages = "io.github.mitu2.static_run_springboot.controller")
-    public static class RequestErrorControllerAdvice {
+
+
+    @RestControllerAdvice(basePackageClasses = SysInfoController.class)
+    static class ExceptionControllerAdvice {
 
         @ExceptionHandler(Throwable.class)
         @ResponseBody
         @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
         public ErrorInfoDTO doThrowableHandler(HttpServletResponse response, Throwable e) {
-            if (e instanceof ServerErrorRuntimeException) {
-                ServerErrorRuntimeException exception = (ServerErrorRuntimeException) e;
-                response.setStatus(exception.getHttpStatus().value());
-                return exception.getResultError();
+            if (e instanceof ServerErrorRuntimeException err) {
+                response.setStatus(err.getHttpStatus().value());
+                return err.getResultError();
             }
             return ErrorInfoDTO.fromErrorStatus(SystemErrorStatusEnum.UNKNOWN);
         }
