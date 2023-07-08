@@ -6,7 +6,7 @@ import { createApp } from "vue"
 import App from "./App.vue"
 import router from "@/router";
 import store from "@/store";
-import { axiosInstall } from "@/request/axios.reuqest"
+import { axiosInstall } from "@/request/reuqest"
 
 createApp(App)
     .use(router)

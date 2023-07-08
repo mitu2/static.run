@@ -10,7 +10,8 @@ import lombok.ToString;
 public enum SystemErrorStatusEnum implements ErrorStatusInterface {
 
     UNKNOWN("-1", "unknown status"),
-    ;
+    // TODO SET CODE
+    NEED_LOGIN("1403", "Access Denied");
 
     @Getter
     private final String code;

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const request = axios.create({
-    // TODO: replace .env
-    baseURL: 'http://api.local.static.run:8091'
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true
 })
 
 export const axiosInstall = (plugin) => {

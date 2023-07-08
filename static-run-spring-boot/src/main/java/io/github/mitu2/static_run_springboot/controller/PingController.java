@@ -1,20 +1,24 @@
 package io.github.mitu2.static_run_springboot.controller;
 
-import io.github.mitu2.static_run_springboot.constant.SystemErrorStatusEnum;
-import io.github.mitu2.static_run_springboot.exception.ServerErrorRuntimeException;
-import io.github.mitu2.static_run_springboot.pojo.dto.ErrorInfoDTO;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author chenmoand
  */
-@RestController
+@Controller
 public class PingController {
 
     @GetMapping("ping")
+    @ResponseBody
     public String ping() {
         return "pong";
+    }
+
+    @GetMapping
+    public String index() {
+        return "index";
     }
 
 }

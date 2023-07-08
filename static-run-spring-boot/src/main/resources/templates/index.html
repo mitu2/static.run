@@ -1,0 +1,12 @@
+<body>
+<span id="result"></span>
+<script lang="javascript">
+    if(window.location.search.indexOf('loginSuccess') !== -1) {
+        document.getElementById("result").innerHTML = '登陆成功 3秒后自动关闭';
+        setTimeout(() => {
+            window.close();
+        }, 3000)
+    }
+</script>
+</body>
+
