@@ -1,12 +1,14 @@
-import { createStore, createLogger } from 'vuex'
+import { createLogger, createStore } from 'vuex'
 import regexp from '@/store/modules/regexp'
+import user from "@/store/modules/user";
 
-const debug = import.meta.env.PROD
+const isProd = import.meta.env.PROD
 
 export default createStore({
     modules: {
-        regexp
+        regexp,
+        user
     },
-    strict: debug,
-    plugins: debug ? [createLogger()] : []
+    strict: isProd,
+    plugins: isProd ? [] : [ createLogger() ]
 })

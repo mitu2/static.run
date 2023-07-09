@@ -14,10 +14,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author chenmoand
  */
 @Configuration
-@EnableTransactionManagement
-@EnableJpaAuditing
 @MapperScan(basePackageClasses = SysInfoMapper.class)
 @EntityScan(basePackageClasses = SysInfoPO.class)
+@EnableTransactionManagement
+@EnableJpaAuditing
 @EnableJpaRepositories(basePackageClasses = SysInfoRepository.class)
 public class DatabaseConfiguration {
 

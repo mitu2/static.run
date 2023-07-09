@@ -33,28 +33,5 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .allowedHeaders("*");
     }
 
-    @RestControllerAdvice(basePackageClasses = SysInfoController.class)
-    @Slf4j
-    static class ExceptionControllerAdvice {
-
-        @ExceptionHandler(ServerErrorRuntimeException.class)
-        @ResponseBody
-        @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-        public ErrorInfoDTO doThrowableHandler(HttpServletResponse response, Throwable e) {
-            if (e instanceof ServerErrorRuntimeException err) {
-                response.setStatus(err.getHttpStatus().value());
-                return err.getResultError();
-            }
-            if (e instanceof AccessDeniedException || e instanceof AuthenticationException) {
-                response.setStatus(HttpStatus.FORBIDDEN.value());
-                return ErrorInfoDTO.fromErrorStatus(SystemErrorStatusEnum.NEED_LOGIN);
-            }
-            log.debug("unknown exception: " + e.getMessage(), e);
-            return ErrorInfoDTO.fromErrorStatus(SystemErrorStatusEnum.UNKNOWN);
-        }
-
-
-    }
-
 
 }

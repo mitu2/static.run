@@ -1,4 +1,4 @@
-import { request } from "@/request/reuqest";
+import { request } from "@/request";
 
 export const getSysConfig = () => {
     return request.get('/sys-info/getSysConfig')
