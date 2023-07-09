@@ -20,6 +20,12 @@ spring:
             scope:
               - user_info
             redirect-uri: "{baseScheme}://{baseHost}{basePort}{basePath}/authorized/{registrationId}"
+          github:
+            authorization-grant-type: authorization_code
+            client-secret: f08441321811c17d20099bc94c0e6c145297a577
+            client-id: 1981b592d396a2672aae
+            scope:
+              - read:user
 logging:
   level:
     web: debug

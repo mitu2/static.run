@@ -5,6 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
+          <factory-entry name="entityManagerFactory" value="7a742e52-b783-4b25-8d92-e88b0243c641" />
           <factory-entry name="static-run-pojo" value="7a742e52-b783-4b25-8d92-e88b0243c641" />
         </datasource-mapping>
         <naming-strategy-map />

@@ -2,12 +2,12 @@ package io.github.mitu2.static_run_springboot.pojo.po;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.domain.Persistable;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author chenmoand
@@ -21,13 +21,13 @@ public abstract class AbstractEntity<PK extends Serializable> implements Persist
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private PK id;
 
-    @CreatedDate
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdDate;
+    private Date createdDate;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime lastModifiedDate;
+    private Date lastModifiedDate;
 
     @Override
     public boolean isNew() {
