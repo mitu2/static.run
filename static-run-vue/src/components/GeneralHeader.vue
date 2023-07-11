@@ -1,13 +1,13 @@
 <script setup>
-import { h } from "vue";
-import { NIcon, useMessage } from "naive-ui";
+import { computed, h } from "vue";
+import { useMessage, useOsTheme } from "naive-ui";
 import { RouterLink } from "vue-router";
-import { HomeOutline as HomeIcon } from "@vicons/ionicons5";
-import ToolIcon from "../icon/ToolIcon.vue";
+import { Moon as MoonIcon, Sunny as SunnyIcon } from "@vicons/ionicons5";
+import useModuleStore from "@/store/useModuleStore";
 
-function renderIcon(icon) {
-  return () => h(NIcon, null, { default: () => h(icon) });
-}
+const osThemeRef = useOsTheme()
+const { state } = useModuleStore('system')
+let inverted = computed(() => (!state.theme || state.theme === 'dark') && osThemeRef.value === 'dark')
 
 const menuOptions = [
   {
@@ -22,7 +22,6 @@ const menuOptions = [
         { default: () => "首页" }
     ),
     key: "go-back-home",
-    icon: renderIcon(HomeIcon)
   },
   {
     label: () => h(
@@ -40,7 +39,6 @@ const menuOptions = [
   {
     label: "小工具",
     key: "tool",
-    icon: renderIcon(ToolIcon),
     children: [
       {
         type: "group",
@@ -96,23 +94,45 @@ function handleUpdateValue(key, item) {
 </script>
 
 <template>
-  <div id="general-header">
-    <n-menu
-        id="general-header-menu"
-        :options="menuOptions"
-        mode="horizontal"
-        @update:value="handleUpdateValue"
-    />
-  </div>
+  <n-layout-header bordered :inverted='inverted'>
+    <n-grid x-gap="12">
+      <n-gi span="2">
+        <div class="logo">
+          <n-gradient-text
+              gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)"
+          >
+            Easy Tools
+          </n-gradient-text>
+        </div>
+      </n-gi>
+      <n-gi span="10">
+        <n-menu
+            :options="menuOptions"
+            mode="horizontal"
+            :inverted="inverted"
+            @update:value="handleUpdateValue"
+        />
+        <n-switch v-model:value="state.theme" size="medium" checked-value="dark" unchecked-value="light">
+          <template #icon>
+            <n-icon>
+              <sunny-icon v-show="state.theme === 'light'"/>
+              <moon-icon v-show="state.theme === 'dark'"/>
+            </n-icon>
+          </template>
+        </n-switch>
+      </n-gi>
+    </n-grid>
+
+
+  </n-layout-header>
+
 </template>
 
 <style scoped>
-#general-header {
-  margin-bottom: 5px;
-}
-
-#general-header-menu {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 </style>
