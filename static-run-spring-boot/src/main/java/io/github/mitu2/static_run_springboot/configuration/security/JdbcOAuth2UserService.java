@@ -44,14 +44,12 @@ public class JdbcOAuth2UserService extends DefaultOAuth2UserService {
         po.setRegisterSourceId(registerSourceId);
         Map<String, Object> attributes = oAuth2User.getAttributes();
         switch (registerSource) {
-            case "gitee" -> {
+            case "gitee", "github" -> {
                 po.setEmail(getAttr(attributes, "email"));
                 po.setBlog(getAttr(attributes, "blog"));
                 po.setAvatarUrl(getAttr(attributes, "avatar_url"));
                 po.setName(getAttr(attributes, "name"));
                 po.setHomepage(getAttr(attributes, "html_url"));
-            }
-            case "github" -> {
             }
             default -> throw new IllegalArgumentException("registerSource " + registerSource + " illegality");
         }

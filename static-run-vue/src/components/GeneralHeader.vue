@@ -1,95 +1,33 @@
 <script setup>
-import { computed, h } from "vue";
-import { useMessage, useOsTheme } from "naive-ui";
-import { RouterLink } from "vue-router";
+import { computed, ref, watchEffect } from "vue";
+import { useOsTheme } from "naive-ui";
+import { useRouter } from "vue-router";
 import { Moon as MoonIcon, Sunny as SunnyIcon } from "@vicons/ionicons5";
 import useModuleStore from "@/store/useModuleStore";
 
 const osThemeRef = useOsTheme()
 const { state } = useModuleStore('system')
-let inverted = computed(() => (!state.theme || state.theme === 'dark') && osThemeRef.value === 'dark')
+const theme = computed(() => state.theme || osThemeRef.value)
+const inverted = computed(() => theme.value === 'dark')
 
-const menuOptions = [
-  {
-    label: () => h(
-        RouterLink,
-        {
-          to: {
-            name: "Home",
-            params: {}
-          }
-        },
-        { default: () => "首页" }
-    ),
-    key: "go-back-home",
-  },
-  {
-    label: () => h(
-        RouterLink,
-        {
-          to: {
-            name: "LeaveMessage",
-            params: {}
-          }
-        },
-        { default: () => "留言板" }
-    ),
-    key: "go-leave-message",
-  },
-  {
-    label: "小工具",
-    key: "tool",
-    children: [
-      {
-        type: "group",
-        label: "浏览器",
-        key: "browser",
-        children: [
-          {
-            label: () => h(
-                RouterLink,
-                {
-                  to: {
-                    name: "ShortUrl",
-                    params: {}
-                  }
-                },
-                { default: () => "短网址" }
-            ),
-            key: "go-short-url",
-          },
-        ]
-      },
-      {
-        type: "group",
-        label: "编程相关",
-        key: "code",
-        children: [
-          {
-            label: () => h(
-                RouterLink,
-                {
-                  to: {
-                    name: "Regexp",
-                    params: {}
-                  }
-                },
-                { default: () => "正则编辑器" }
-            ),
-            key: "go-regexp",
-          },
-        ]
-      },
-    ]
-  },
-];
+const router = useRouter()
 
-const message = useMessage();
+const menuOptions = [ ...router.options.routes ]
+const menuKey = ref('')
+
+
+watchEffect(() => {
+  menuKey.value = router.currentRoute.value.name;
+})
 
 function handleUpdateValue(key, item) {
-  message.info("[onUpdate:value]: " + JSON.stringify(key));
-  message.info("[onUpdate:value]: " + JSON.stringify(item));
+  router.push({ name: key })
 }
+
+function handleUpdateThemeValue(value) {
+  state.theme = value;
+}
+
 
 </script>
 
@@ -107,16 +45,24 @@ function handleUpdateValue(key, item) {
       </n-gi>
       <n-gi span="10">
         <n-menu
+            :value="menuKey"
+            key-field="name"
             :options="menuOptions"
             mode="horizontal"
             :inverted="inverted"
             @update:value="handleUpdateValue"
         />
-        <n-switch v-model:value="state.theme" size="medium" checked-value="dark" unchecked-value="light">
+        <n-switch v-model:value="state.theme"
+                  size="medium"
+                  checked-value="dark"
+                  :default-value="theme"
+                  unchecked-value="light"
+                  :on-update:value="handleUpdateThemeValue"
+        >
           <template #icon>
             <n-icon>
-              <sunny-icon v-show="state.theme === 'light'"/>
-              <moon-icon v-show="state.theme === 'dark'"/>
+              <sunny-icon v-show="theme === 'light'"/>
+              <moon-icon v-show="theme === 'dark'"/>
             </n-icon>
           </template>
         </n-switch>

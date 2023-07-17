@@ -9,15 +9,13 @@ import 'highlight.js/styles/github.css'
 
 import GeneralHeader from '@/components/GeneralHeader.vue';
 import useModuleStore from "@/store/useModuleStore";
+import GeneralFooter from "@/components/GeneralFooter.vue";
 
 const osThemeRef = useOsTheme()
 const { state } = useModuleStore('system')
 
-if(!state.theme) {
-  state.theme = osThemeRef.value;
-}
 
-let theme = computed(() => (!state.theme || state.theme === 'dark') && osThemeRef.value === 'dark' ? darkTheme : lightTheme)
+let theme = computed(() => (state.theme || osThemeRef.value) === 'dark' ? darkTheme : lightTheme)
 
 hljs.registerLanguage('markdown', markdown);
 
@@ -44,8 +42,11 @@ marked.setOptions({
     <n-global-style/>
     <n-message-provider>
       <n-layout>
-          <general-header/>
+        <general-header/>
+        <n-layout-content>
           <router-view/>
+        </n-layout-content>
+        <general-footer/>
       </n-layout>
       <n-back-top :right="100"/>
     </n-message-provider>
