@@ -1,5 +1,7 @@
 package io.github.mitu2.static_run_springboot.pojo.po;
 
+import io.github.mitu2.static_run_springboot.pojo.po.support.AbstractEntity;
+import io.github.mitu2.static_run_springboot.pojo.po.support.TombstoneAbstractEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,11 +20,11 @@ import java.util.List;
 @Entity
 @Table(name = "leave_message")
 @Data
-public class LeaveMessagePO extends AbstractEntity<Long> implements Serializable {
+public class LeaveMessagePO extends TombstoneAbstractEntity<Long> implements Serializable {
 
 
     @Serial
-    private static final long serialVersionUID = -3436161513591276484L;
+    private static final long serialVersionUID = io.github.mitu2.static_run_springboot.pojo.Version.SERIAL_VERSION;
 
     @Column
     private Long parentId;

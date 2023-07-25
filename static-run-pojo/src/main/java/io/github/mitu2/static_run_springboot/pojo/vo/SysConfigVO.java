@@ -1,5 +1,6 @@
 package io.github.mitu2.static_run_springboot.pojo.vo;
 
+import io.github.mitu2.static_run_springboot.pojo.Version;
 import lombok.Data;
 
 import java.io.Serial;
@@ -15,7 +16,7 @@ public class SysConfigVO implements Serializable {
 
 
     @Serial
-    private static final long serialVersionUID = -5226152751330452972L;
+    private static final long serialVersionUID = Version.SERIAL_VERSION;
 
     /**
      * 安装时间

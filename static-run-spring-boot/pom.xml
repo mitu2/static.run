@@ -21,6 +21,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <dependency>
             <groupId>io.github.mitu2</groupId>
             <artifactId>static-run-pojo</artifactId>
             <version>${static-run.version}</version>

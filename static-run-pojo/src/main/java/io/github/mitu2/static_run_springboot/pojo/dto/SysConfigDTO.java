@@ -1,6 +1,7 @@
 package io.github.mitu2.static_run_springboot.pojo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.github.mitu2.static_run_springboot.pojo.Version;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 public class SysConfigDTO implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -3427320076202591337L;
+    private static final long serialVersionUID = Version.SERIAL_VERSION;
 
 
     /**

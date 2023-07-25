@@ -1,5 +1,7 @@
 package io.github.mitu2.static_run_springboot.pojo.po;
 
+import io.github.mitu2.static_run_springboot.pojo.Version;
+import io.github.mitu2.static_run_springboot.pojo.po.support.TombstoneAbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -18,10 +20,10 @@ import java.io.Serializable;
 @Comment("用户表")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserPO extends AbstractEntity<Long> implements Serializable {
+public class UserPO extends TombstoneAbstractEntity<Long> implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = -8780281342432446014L;
+    private static final long serialVersionUID = Version.SERIAL_VERSION;
 
     @Column
     @Comment("用户名")

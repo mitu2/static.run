@@ -1,7 +1,7 @@
 package io.github.mitu2.static_run_springboot.pojo.po;
 
 import io.github.mitu2.static_run_springboot.pojo.Version;
-import io.github.mitu2.static_run_springboot.pojo.po.support.AbstractEntity;
+import io.github.mitu2.static_run_springboot.pojo.po.support.TombstoneAbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -15,26 +15,27 @@ import java.io.Serializable;
 
 /**
  * @author chenmoand
+ * @date 2023/7/25 20:08
  */
-@Table(name = "sys_info")
+@Table(name = "short_url")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SysInfoPO extends AbstractEntity<Integer> implements Serializable {
+public class ShortUrlPO extends TombstoneAbstractEntity<Long> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = Version.SERIAL_VERSION;
 
-    @Column(unique = true, nullable = false)
-    private String name;
+    @Column(length = 25565)
+    private String url;
 
     @Column
-    private String value;
+    private String router;
 
     @Column
-    private String targetClass;
+    private String bindDomain;
 
 
 }
