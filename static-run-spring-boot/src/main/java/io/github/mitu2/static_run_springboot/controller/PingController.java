@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PingController {
 
-    @GetMapping("ping")
+    @GetMapping(path = "ping")
     @ResponseBody
     public String ping() {
         return "pong";
     }
 
-    @GetMapping
+    @GetMapping(path = {"", "/", "index"})
     public String index() {
         return "index";
     }

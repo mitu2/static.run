@@ -43,15 +43,14 @@ public class JdbcOAuth2UserService extends DefaultOAuth2UserService {
         po.setRegisterSource(registerSource);
         po.setRegisterSourceId(registerSourceId);
         Map<String, Object> attributes = oAuth2User.getAttributes();
-        switch (registerSource) {
-            case "gitee", "github" -> {
-                po.setEmail(getAttr(attributes, "email"));
-                po.setBlog(getAttr(attributes, "blog"));
-                po.setAvatarUrl(getAttr(attributes, "avatar_url"));
-                po.setName(getAttr(attributes, "name"));
-                po.setHomepage(getAttr(attributes, "html_url"));
-            }
-            default -> throw new IllegalArgumentException("registerSource " + registerSource + " illegality");
+        if("gitee".equalsIgnoreCase(registerSource) || "github".equalsIgnoreCase(registerSource)) {
+            po.setEmail(getAttr(attributes, "email"));
+            po.setBlog(getAttr(attributes, "blog"));
+            po.setAvatarUrl(getAttr(attributes, "avatar_url"));
+            po.setName(getAttr(attributes, "name"));
+            po.setHomepage(getAttr(attributes, "html_url"));
+        } else {
+            throw new IllegalArgumentException("registerSource " + registerSource + " illegality");
         }
         return userRepository.save(po).getId();
     }
