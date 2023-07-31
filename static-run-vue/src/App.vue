@@ -38,10 +38,10 @@ marked.setOptions({
 </script>
 
 <template>
-  <n-config-provider :theme="theme" :locale="zhCN" :date-locale="dateZhCN" :hljs="hljs">
+  <n-config-provider :theme="theme" :locale="zhCN" :date-locale="dateZhCN" :hljs="hljs" style="height: 100%">
     <n-global-style/>
     <n-message-provider>
-      <n-layout>
+      <n-layout bordered style="height: 100%">
         <general-header/>
         <n-layout-content>
           <router-view/>
