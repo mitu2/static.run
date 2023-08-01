@@ -1,9 +1,10 @@
 <script setup>
-import Login from "@/components/Login.vue";
 </script>
 
 <template>
-  <login/>
+  <n-space justify="center">
+    Content
+  </n-space>
 </template>
 
 <style scoped>

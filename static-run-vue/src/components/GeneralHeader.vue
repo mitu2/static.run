@@ -37,9 +37,10 @@ function handleUpdateThemeValue(value) {
       <n-gi span="2">
         <div class="logo">
           <n-gradient-text
-              gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)"
+              :gradient="inverted ? 'linear-gradient(90deg, #00FFFF 0%, red 50%, #FFFF00 100%)' : 'linear-gradient(90deg, red 0%, green 50%, blue 100%)'"
+              :size="18"
           >
-            Easy Tools
+            Unused
           </n-gradient-text>
         </div>
       </n-gi>
